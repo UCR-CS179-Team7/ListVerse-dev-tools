@@ -1,0 +1,18 @@
+---
+# Setups Python Development Tools
+
+- name: Install Python Development headers
+  apt: >
+    update_cache=yes
+    name=python-dev
+    state=latest
+  sudo: yes
+
+- name: Install pip and virtualenv
+  apt: >
+    name={{ item }}
+    state=latest
+  with_items:
+    - python-pip
+    - python-virtualenv
+  sudo: yes
