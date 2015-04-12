@@ -1,0 +1,4 @@
+---
+# Configures all of the boxes for development on ListVerse
+
+- hosts: all
