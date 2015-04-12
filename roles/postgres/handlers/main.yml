@@ -1,0 +1,7 @@
+---
+# Handlers for Postgres setup events
+- name: restart postgres
+  service: > 
+    name=postgresql
+    state=started
+    enabled=yes

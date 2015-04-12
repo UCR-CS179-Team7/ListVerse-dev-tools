@@ -1,0 +1,14 @@
+---
+# Variables to use while setting up PostgreSQL
+locale: "en_US.UTF-8"
+
+postgres_install_env:
+  LANG: "{{ locale }}"
+  LC_MESSAGES : "{{ locale }}"
+  LC_CTYPE : "{{ locale }}"
+  LC_MESSAGES : "{{ locale }}"
+  LC_MONETARY : "{{ locale }}"
+  LC_NUMERIC : "{{ locale }}"
+  LC_TIME : "{{ locale }}"
+  LC_ALL : "{{ locale }}"
+

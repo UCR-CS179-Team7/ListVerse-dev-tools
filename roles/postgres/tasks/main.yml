@@ -1,0 +1,45 @@
+---
+# Tasks for setting up PostgreSQL on Ubuntu 14.04
+
+- name: Add PostgreSQL repository
+  copy: >
+        src=pgdg.list
+        dest=/etc/apt/sources.list.d/pgdg.list
+        mode=0644
+  sudo: yes
+
+- name: Import PostgreSQL repository signing key
+  apt_key: >
+        url=https://www.postgresql.org/media/keys/ACCC4CF8.asc       
+        state=present
+  sudo: yes
+
+- name: Install PostgreSQL server
+  apt: >
+      update_cache=yes
+      name=postgresql-9.4
+      state=present
+  environment: postgres_install_env
+  sudo: yes
+
+- name: Install PostgreSQL client, dev lib, and additional modules
+  apt: >
+      name={{ item }}
+      state=present
+  with_items:
+    - postgresql-client-9.4
+    - postgresql-contrib-9.4
+    - libpq-dev
+    - postgresql-server-dev-9.4
+  sudo : yes
+  notify: restart postgres
+
+- name: Update PostgreSQL config
+  copy: >
+    src=postgresql.conf
+    dest=/etc/postgresql/9.4/main/postgresql.conf
+    owner=postgres
+    group=postgres
+    mode=0411
+  sudo: yes
+  notify: restart postgres
