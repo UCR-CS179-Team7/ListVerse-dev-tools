@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 80, host: 8080
 
   # Sync the main project folder with /opt/ListVerse
-  config.vm.synced_folder "../../", "/opt/ListVerse"
+  config.vm.synced_folder "../", "/opt/ListVerse"
 
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
