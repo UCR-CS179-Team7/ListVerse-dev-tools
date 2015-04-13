@@ -6,7 +6,7 @@
   shell: "{{ item }}"
   with_items:
     - "virtualenv {{ venv_path }}"
-    - "{{ venv_path }}/bin/pip install -r {{ project_path }}/ListVerse/requirements.txt"
+    - "{{ venv_path }}/bin/pip install -r {{ project_path }}/requirements.txt"
     - "chown -R vagrant:vagrant {{ venv_path }}"
 
 - name: Move start_listverse script to Vagrant home
