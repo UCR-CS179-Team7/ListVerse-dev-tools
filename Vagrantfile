@@ -12,4 +12,9 @@ Vagrant.configure(2) do |config|
     # Customize the amount of memory on the VM:
     vb.memory = "1024"
   end
+
+  # use Ansible as a provisioner
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "site.yml"
+  end
 end
