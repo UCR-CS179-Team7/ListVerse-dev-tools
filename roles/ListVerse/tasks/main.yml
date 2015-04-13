@@ -1,0 +1,47 @@
+---
+# Setup tasks that are specically for setting up ListVerse  
+# Assumes that the tasks for the postgres and python roles were run
+
+- name: Setup virtualenv
+  shell: "{{ item }}"
+  with_items:
+    - "virtualenv {{ venv_path }}"
+    - "{{ venv_path }}/bin/pip install -r {{ project_path }}/ListVerse/requirements.txt"
+    - "chown -R vagrant:vagrant {{ venv_path }}"
+
+- name: Move start_listverse script to Vagrant home
+  template: >
+    src=start_listverse.sh.j2
+    dest=/home/vagrant/start_listverse.sh
+    mode=0755
+    owner=vagrant
+    group=vagrant
+
+# Install dependency for postgresql_db and postgresql_user modules
+- name: Install psycopg2
+  apt: >
+    name=python-psycopg2
+    state=present
+  sudo: yes
+
+- name: Create database
+  postgresql_db: >
+    name={{ db.name }}
+  sudo: yes
+  sudo_user: postgres
+
+- name: Give database access to user 
+  postgresql_user: >
+    db={{ db.name }}
+    name={{ db.user }}
+    password={{ db.password }}
+    priv=ALL
+  sudo: yes
+  sudo_user: postgres
+
+- name: Reduce privilege of user
+  postgresql_user:
+    name={{ db.user }}
+    role_attr_flags=NOSUPERUSER,NOCREATEDB
+  sudo: yes
+  sudo_user: postgres

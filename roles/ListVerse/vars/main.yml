@@ -1,0 +1,8 @@
+---
+venv_path: /tmp/ListVerse-venv
+project_path: /opt/ListVerse
+
+db:
+  name: "{{ db_name | default('test') }}"
+  user: "{{ db_user | default('django') }}"
+  password: "{{ db_password | default('test') }}"
