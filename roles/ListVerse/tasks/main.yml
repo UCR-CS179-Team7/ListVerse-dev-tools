@@ -2,6 +2,12 @@
 # Setup tasks that are specically for setting up ListVerse  
 # Assumes that the tasks for the postgres and python roles were run
 
+- name: Install git
+  apt: >
+    name=git
+    state=latest
+  sudo: yes
+
 - name: Move start_listverse script to Vagrant home
   template: >
     src=start_listverse.sh.j2
