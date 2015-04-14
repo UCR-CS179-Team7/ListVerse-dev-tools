@@ -1,5 +1,12 @@
 #! /bin/sh
 
+if [ ! -d "{{ venv_path }}" ]
+then
+    virtualenv {{ venv_path }}
+    {{ venv_path }}/bin/pip install -r {{ project_path }}/requirements.txt
+    chown -R vagrant:vagrant {{ venv_path }}
+fi
+
 . {{ venv_path }}/bin/activate
 export PYTHONPATH={{ project_path }}
 cd {{ project_path }}
